@@ -8,7 +8,6 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
-use Laravel\Sanctum\PersonalAccessToken;
 
 class AuthApiService
 {
@@ -24,6 +23,7 @@ class AuthApiService
             ]);
         }
 
+        /** @var User $user */
         $user = Auth::user();
 
         return $this->getToken($user);
@@ -44,11 +44,10 @@ class AuthApiService
 
     public function logout(Request $request): void
     {
-        $token = $request->user()->currentAccessToken();
+        /** @var User $user */
+        $user = $request->user();
 
-        if ($token instanceof PersonalAccessToken) {
-            $token->delete();
-        }
+        $user->currentAccessToken()->delete();
     }
 
     private function getToken(User $user): string

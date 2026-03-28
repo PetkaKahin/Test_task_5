@@ -12,7 +12,7 @@ class LogoutController extends Controller
         private readonly AuthApiService $authApiService
     ) {}
 
-    public function __invoke(Request $request)
+    public function __invoke(Request $request): \Illuminate\Http\Response
     {
         $this->authApiService->logout($request);
 
