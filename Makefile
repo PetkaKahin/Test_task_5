@@ -1,3 +1,5 @@
+.PHONY: init up down build restart ps logs php composer-install migrate fresh stan ide-helper tests
+
 ifeq ($(OS),Windows_NT)
     COPY := copy
 else
