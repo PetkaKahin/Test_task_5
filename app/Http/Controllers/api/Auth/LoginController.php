@@ -5,7 +5,9 @@ namespace App\Http\Controllers\api\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Resources\api\Auth\LoginResource;
+use App\Models\User;
 use App\Services\AuthApiService;
+use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
@@ -14,10 +16,13 @@ class LoginController extends Controller
         private readonly AuthApiService $authApiService
     ) {}
 
-    public function __invoke(LoginRequest $request)
+    public function __invoke(LoginRequest $request): JsonResource
     {
         $token = $this->authApiService->login($request);
 
-        return (new LoginResource(Auth::user()))->additional(['token' => $token]);
+        /** @var User $user */
+        $user = Auth::user();
+
+        return (new LoginResource($user))->additional(['token' => $token]);
     }
 }
