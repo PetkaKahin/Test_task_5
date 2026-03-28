@@ -15,6 +15,7 @@ Route::middleware('guest')->group(function () {
     Route::post('register', RegisterController::class);
 });
 
-Route::middleware('auth:api')->group(function () {
+Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('tasks', TaskController::class);
+    Route::get('logout', LogoutController::class);
 });
