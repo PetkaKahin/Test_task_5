@@ -29,12 +29,14 @@ class TaskController extends Controller
         return TaskResource::collection($this->taskService->index($user));
     }
 
-    public function store(StoreTaskRequest $request): TaskResource
+    public function store(StoreTaskRequest $request): JsonResponse
     {
         /** @var User $user */
         $user = $request->user();
 
-        return new TaskResource($this->taskService->store($request, $user));
+        return (new TaskResource($this->taskService->store($request, $user)))
+            ->response()
+            ->setStatusCode(201);
     }
 
     public function show(ShowTaskRequest $request, Task $task): TaskResource
