@@ -27,7 +27,7 @@ test('user can create a task', function () {
         ->postJson('/api/tasks', [
             'title' => 'New Task',
             'description' => 'Task description',
-            'status' => 'pending',
+            'status' => 'processing',
         ]);
 
     $response->assertCreated()
