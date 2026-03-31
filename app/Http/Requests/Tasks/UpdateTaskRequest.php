@@ -2,8 +2,10 @@
 
 namespace App\Http\Requests\Tasks;
 
+use App\Enums\TaskStatus;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateTaskRequest extends FormRequest
 {
@@ -31,7 +33,7 @@ class UpdateTaskRequest extends FormRequest
             'status' => [
                 'sometimes',
                 'string',
-                'max:255'
+                Rule::enum(TaskStatus::class),
             ],
         ];
     }
